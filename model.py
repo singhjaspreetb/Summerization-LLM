@@ -1,3 +1,4 @@
+from io import StringIO
 import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -12,7 +13,7 @@ st.title('Summerisation Model')
 api_key = st.text_input('Your Key',placeholder="Enter Your key")
 os.environ["OPENAI_API_KEY"] = api_key
 
-temp = st.slider('Temprature', 0.1, 1, 0.1)
+temp = st.slider('Temprature', 0.1, 1.0, 0.1)
 st.write("Temprature ", temp)
 
 length = st.slider('Max Characters', 200, 4000, 200)
@@ -22,12 +23,16 @@ raw_text = ''
 
 uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 if uploaded_file is not None:
-    bytes_data = uploaded_file.getvalue()
-    reader = PdfReader(bytes_data)
-    for i, page in enumerate(reader.pages):
-        text = page.extract_text()
-        if text:
-            raw_text += text
+    # bytes_data = uploaded_file.getvalue()
+    stringio = StringIO(uploaded_file.getvalue().decode("ISO-8859-1"))
+    st.write(stringio)
+    string_data = stringio.read()
+    raw_text+=string_data
+    # reader = PdfReader(bytes_data)
+    # for i, page in enumerate(reader.pages):
+    #     text = page.extract_text()
+    #     if text:
+    #         raw_text += text
 
 temp_data = st.text_area('Text to analyze',placeholder="Eneter Your Data")
 
