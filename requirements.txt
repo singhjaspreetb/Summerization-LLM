@@ -3,4 +3,4 @@ streamlit==1.21.0
 openai
 faiss-cpu
 tiktoken
-PdfReader
+PyPDF2
