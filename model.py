@@ -1,5 +1,5 @@
 import streamlit as st
-from PyPDF2 import PdfReader
+# from PyPDF2 import PdfReader
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import ElasticVectorSearch, Pinecone, Weaviate, FAISS
@@ -24,14 +24,14 @@ raw_text = ''
 #     ('PDF', 'Text'))
 
 # # if inp == 'PDF':
-uploaded_file = st.file_uploader("Choose a CSV file", type="pdf")
-if uploaded_file is not None:
-    bytes_data = uploaded_file.getvalue()
-    reader = PdfReader(bytes_data)
-    for i, page in enumerate(reader.pages):
-        text = page.extract_text()
-        if text:
-            raw_text += text
+# uploaded_file = st.file_uploader("Choose a CSV file", type="pdf")
+# if uploaded_file is not None:
+#     bytes_data = uploaded_file.getvalue()
+#     reader = PdfReader(bytes_data)
+#     for i, page in enumerate(reader.pages):
+#         text = page.extract_text()
+#         if text:
+#             raw_text += text
 
 # else:
 temp_data = st.text_area('Text to analyze',placeholder="Eneter Your Data")
@@ -43,8 +43,9 @@ text_splitter = CharacterTextSplitter(
     length_function = len,
 )
 
-texts = text_splitter.split_text(raw_text)
-texts.append(temp_data)
+# texts = text_splitter.split_text(raw_text)
+# texts.append(temp_data)
+texts = [temp_data]
 
 query = st.text_area('Query on Data',placeholder="Enter Your Query")
 
