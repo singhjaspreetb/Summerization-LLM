@@ -29,7 +29,10 @@ if uploaded_file is not None:
         if text:
             raw_text += text    
 
-temp_data = st.text_area('Text to analyze',placeholder="Eneter Your Data")
+temp_data="data : "
+# col1,col2,col3=st.columns(3)
+# if col2.button('Add Custom Data',key="adddata"):
+temp_data += st.text_area('Text to analyze',placeholder="Eneter Your Data")
 
 text_splitter = CharacterTextSplitter(
     separator = "\n",
@@ -41,19 +44,23 @@ text_splitter = CharacterTextSplitter(
 texts = text_splitter.split_text(raw_text)
 texts.append(temp_data)
 
-query="_"
+query="query : "
+# col1,col2,col3=st.columns(3)
+# if col2.button('Make Query on Data',key="querydata"):
 query += st.text_area('Query on Data',placeholder="Enter Your Query")
 
-if st.button('Submit'):
+col1,col2,col3=st.columns(3)
+if col2.button('Submit'):
     embeddings = OpenAIEmbeddings()
     docsearch = FAISS.from_texts(texts, embeddings)
     chain = load_qa_chain(OpenAI(), chain_type="stuff")
 
     docs = docsearch.similarity_search(query)  
     summry=docsearch.similarity_search(" ")  
-    txt=chain.run(input_documents=summry, question="Summerize within 150 words")
+    txt=chain.run(input_documents=summry, question="Summerize in points within 150 words")
     st.write('Summery :', txt)
-    txt=chain.run(input_documents=docs, question=query)
-    st.write('Output :', txt)
+    if(query!="query : "):
+        txt=chain.run(input_documents=docs, question=query)
+        st.write('Output :', txt)
 else:
     st.write('Enter Your Query !')
