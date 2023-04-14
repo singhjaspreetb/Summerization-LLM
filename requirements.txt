@@ -1,2 +1,5 @@
 langchain==0.0.139
 streamlit==1.21.0
+openai
+faiss-cpu
+tiktoken
