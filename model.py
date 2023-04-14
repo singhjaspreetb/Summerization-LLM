@@ -12,6 +12,9 @@ st.title('Summerisation Model')
 api_key = st.text_input('Your Key',placeholder="Enter Your key")
 os.environ["OPENAI_API_KEY"] = api_key
 
+temp = st.slider('Temprature', 0.1, 1, 0.1)
+st.write("Temprature ", temp)
+
 length = st.slider('Max Characters', 200, 4000, 200)
 st.write("Characters ", length)
 
@@ -43,7 +46,7 @@ query = st.text_area('Query on Data',placeholder="Enter Your Query")
 if st.button('Submit'):
     embeddings = OpenAIEmbeddings()
     docsearch = FAISS.from_texts(texts, embeddings)
-    chain = load_qa_chain(OpenAI(max_tokens=int(length),model_name="gpt-3.5-turbo"), chain_type="stuff")
+    chain = load_qa_chain(OpenAI(max_tokens=int(length),model_name="gpt-3.5-turbo",temperature=float(temp)), chain_type="stuff")
 
     docs = docsearch.similarity_search(query)  
     txt=chain.run(input_documents=texts, question="Summerize within 150 words")
