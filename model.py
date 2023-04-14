@@ -41,7 +41,7 @@ text_splitter = CharacterTextSplitter(
 texts = text_splitter.split_text(raw_text)
 texts.append(temp_data)
 
-query=" "
+query="_"
 query += st.text_area('Query on Data',placeholder="Enter Your Query")
 
 if st.button('Submit'):
