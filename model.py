@@ -7,7 +7,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 import os
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 st.title('Summerisation Model')
 
