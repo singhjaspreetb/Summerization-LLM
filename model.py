@@ -7,7 +7,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 import os
 
-kay = st.text_area('Your Key',placeholder="Enter Your key")
+kay = st.text_input('Your Key',placeholder="Enter Your key")
 os.environ["OPENAI_API_KEY"] = kay
 
 
